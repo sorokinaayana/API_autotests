@@ -1,32 +1,35 @@
-import { faker } from '@faker-js/faker';
-
-export class TodoBuilder {
+﻿export class TodoBuilder {
   constructor() {
-    this.title = faker.lorem.words(3);
-    this.doneStatus = false;
-    this.description = faker.lorem.sentence();
+    this.reset();
   }
 
-  withTitle(title) {
-    this.title = title;
+  reset() {
+    this.data = {
+      title: "",
+      doneStatus: false,
+      description: ""
+    };
     return this;
   }
 
-  withDoneStatus(status) {
-    this.doneStatus = status;
+  withTitle(title = "Тестовая задача") {
+    this.data.title = title;
     return this;
   }
 
-  withDescription(desc) {
-    this.description = desc;
+  withDescription(description = "Тестовое описание") {
+    this.data.description = description;
+    return this;
+  }
+
+  withDoneStatus(doneStatus = false) {
+    this.data.doneStatus = doneStatus;
     return this;
   }
 
   build() {
-    return {
-      title: this.title,
-      doneStatus: this.doneStatus,
-      description: this.description
-    };
+    const result = { ...this.data };
+    this.reset();
+    return result;
   }
 }
